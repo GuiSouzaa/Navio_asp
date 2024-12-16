@@ -120,3 +120,4 @@
 /home/guilherme/dev/navioasp/bin/Debug/net9.0/runtimes/win-x64/native/krbcc64.dll
 /home/guilherme/dev/navioasp/bin/Debug/net9.0/runtimes/win/lib/net8.0/System.Diagnostics.EventLog.Messages.dll
 /home/guilherme/dev/navioasp/bin/Debug/net9.0/runtimes/win/lib/net8.0/System.Windows.Extensions.dll
+/home/guilherme/dev/navioasp/obj/Debug/net9.0/navioasp.sourcelink.json

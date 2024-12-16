@@ -1,40 +1,25 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Registra a classe Conexao no container de dependência
-builder.Services.AddSingleton<Conexao>();
-
-// Adiciona os serviços para Controllers e Views
-builder.Services.AddControllersWithViews();
-
-// Adiciona o serviço do Swagger
+// Configuração do Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Registrando a classe Conexao
+builder.Services.AddSingleton<Conexao>();
+
+// Adicionar a configuração dos controladores
+builder.Services.AddControllers();  // Adicionar esse método
+
 var app = builder.Build();
 
-// Configura o Swagger para o ambiente de desenvolvimento
+// Habilitando o Swagger UI
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();  // Gera a documentação da API
-    app.UseSwaggerUI();  // Exibe a interface de usuário do Swagger
-}
-else
-{
-    app.UseExceptionHandler("/Home/Error");
-    // O valor padrão de HSTS é 30 dias. Você pode querer mudar isso para cenários de produção.
-    app.UseHsts();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+// Mapear os controladores
+app.MapControllers();  // Mapear os controladores
 
 app.Run();
