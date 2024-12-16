@@ -1,23 +1,28 @@
 using MySql.Data.MySqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 
 public class Conexao
 {
-    private readonly string _connectionString;
+    private string _connectionString;
 
-    // Construtor recebe o IConfiguration para acessar a string de conexão
-    public Conexao(IConfiguration configuration)
+    public Conexao()
     {
+        // Carregar as configurações do arquivo appsettings.json
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory()) // Define o diretório base como o local onde o programa está sendo executado
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+        var configuration = builder.Build();
         _connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 
-    // Método para obter uma nova conexão MySQL
     public MySqlConnection GetConnection()
     {
         try
         {
-            // Retorna uma nova conexão MySQL com a string de conexão carregada
+            // Retorna uma nova conexão MySQL usando a connection string carregada
             return new MySqlConnection(_connectionString);
         }
         catch (Exception ex)
